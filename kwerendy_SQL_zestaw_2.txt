@@ -1,0 +1,75 @@
+Zad. 1
+a) 
+DELETE FROM postac WHERE nazwa = 'Alrik';
+DELETE FROM postac WHERE nazwa = 'Armod';
+
+b)  
+SHOW CREATE TABLE walizka;
+ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
+SHOW CREATE TABLE przetwory;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+SHOW CREATE TABLE statek;
+ALTER TABLE statek DROP FOREIGN KEY statek_ibfk_1;
+ALTER TABLE postac MODIFY id_postaci int NOT NULL;
+ALTER TABLE postac DROP PRIMARY KEY;
+
+Zad. 2
+a) 
+ALTER TABLE postac ADD pesel varchar(11) NOT NULL;
+ALTER TABLE postac ADD PRIMARY KEY (pesel);
+
+ALTER TABLE postac MODIFY COLUMN rodzaj ENUM('wiking', 'ptak', 'kobieta', 'syrena');
+INSERT INTO postac (id_postaci, nazwa, rodzaj, data_ur, wiek) VALUES (7,
+'Gertruda Nieszczera', 'syrena', '1050-02-01', 50);
+
+Zad. 3
+a) 
+UPDATE postac SET statek = 'cody' WHERE nazwa LIKE '%a%';
+
+b)
+UPDATE statek set max_ladownosc=max_ladownosc*0.7 WHERE data_wodowania<'2000-01-01' and data_wodowania>'1901-01-01';
+
+c)
+SELECT IF(wiek<1000, 'NIE WIEKSZY', 'WIEKSZY') FROM postac;
+
+Zad. 4
+a)
+INSERT INTO postac (id_postaci, nazwa, rodzaj, data_ur, wiek, pesel) VALUES (8, 'waz Loko', 'waz', '1050-02-03', 50, '00000000007');
+
+b) 
+CREATE TABLE Marynarz (id_postaci int NOT NULL, nazwa varchar(40), rodzaj ENUM ('wiking', 'ptak', 'kobieta', 'syrena', 'waz'), data_ur DATE, wiek int, funkcja varchar(50), statek varchar(50), pesel varchar(11));
+
+INSERT INTO Marynarz VALUES (1, 'Bjorn', 'wiking', '2000-10-29', 21, 'kapitan', 'cody', '00000000000');
+INSERT INTO Marynarz (id_postaci, nazwa, rodzaj, data_ur, wiek, statek, pesel) VALUES (2, 'drozd', 'ptak', '2000-10-29', 2,  'cody', '00000000001');
+INSERT INTO Marynarz (id_postaci, nazwa, rodzaj, data_ur, wiek, statek, pesel) VALUES (3, 'tesciowa', 'kobieta', '2000-10-29', 88,  'cody', '00000000002');
+INSERT INTO Marynarz (id_postaci, nazwa, rodzaj, data_ur, wiek, statek, pesel) VALUES (4, 'Abi', 'wiking', '1064-02-01', 20,  'cody', '00000000003');
+INSERT INTO Marynarz (id_postaci, nazwa, rodzaj, data_ur, wiek, statek, pesel) VALUES (5, 'Ali', 'wiking', '1064-02-01', 20,  'cody', '00000000004');
+INSERT INTO Marynarz (id_postaci, nazwa, rodzaj, data_ur, wiek, statek, pesel) VALUES (6, 'Alib', 'wiking', '1064-02-01', 20,  'cody', '00000000005');
+INSERT INTO Marynarz (id_postaci, nazwa, rodzaj, data_ur, wiek, statek, pesel) VALUES (7, 'Gertruda Nieszczera', 'syrena', '1050-02-01', 50,  'cody', '00000000006');
+
+c) 
+ALTER TABLE Marynarz ADD PRIMARY KEY (pesel);
+
+Zad. 5
+a)
+UPDATE Marynarz set statek = '';
+
+b)
+DELETE from Marynarz WHERE id_postaci = 6;
+
+c)
+DELETE FROM statek;
+
+d)
+DROP TABLE statek;
+
+e)
+CREATE TABLE zwierz (id int PRIMARY KEY AUTO_INCREMENT, nazwa varchar(50), wiek int unsigned);
+
+f)
+INSERT INTO zwierz VALUES (1, 'drozd', 2);
+INSERT INTO zwierz VALUES (2, 'waz Loko', 50);
+
+
+

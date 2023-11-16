@@ -1,0 +1,38 @@
+Zadanie 1.
+
+1. CREATE TABLE postac (id_postaci int PRIMARY KEY AUTO_INCREMENT, nazwa varchar(40), 
+rodzaj ENUM('wiking', 'ptak', 'kobieta'), data_ur DATE, wiek BOOL);
+
+
+2. INSERT INTO postac VALUES (1, 'Bjorn', 'wiking', '1066-02-03', '22');
+
+INSERT INTO postac VALUES (2, 'Drozd', 'ptak', '1020-04-05', '2');
+
+INSERT INTO postac VALUES (3, 'Tesciowa', 'kobieta', '1980-02-07', '43');
+
+
+
+3. UPDATE postac set wiek = 88 WHERE nazwa = 'tesciowa';
+
+
+Zadanie 2.
+
+1. CREATE TABLE walizka (id_walizki int PRIMARY KEY AUTO_INCREMENT, pojemnosc BOOL, 
+kolor ENUM('rozowy', 'czerwony', 'teczowy', 'zolty'), id_wlasciciela int, FOREIGN KEY (id_wlasciciela) 
+REFERENCES postac(id_postaci) ON DELETE CASCADE);
+
+2. ALTER TABLE walizka ALTER kolor SET DEFAULT 'rozowy';
+
+3.  INSERT INTO walizka VALUES (1, 15, 'rozowy', 1);
+INSERT INTO walizka VALUES (2, 20, 'rozowy', 3);
+
+
+Zadanie 3.
+
+1. CREATE TABLE izba (adres_budynku varchar(50), nazwa_izby varchar(50), PRIMARY KEY (adres_budynku, nazwa_izby), 
+metraz BOOL, wlasciciel int, FOREIGN KEY (wlasciciel) REFERENCES postac(id_postaci) ON DELETE SET NULL);
+
+2. ALTER TABLE izba ADD kolor_izby varchar(20) AFTER metraz;
+
+ALTER TABLE izba ALTER kolor_izby SET DEFAULT 'czarny';
+
