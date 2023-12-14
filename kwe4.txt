@@ -1,0 +1,25 @@
+ZAD 1
+1. SELECT AVG(waga) FROM kreatura WHERE rodzaj ='wiking';
+2. SELECT AVG(waga), COUNT(nazwa), rodzaj FROM kreatura GROUP BY rodzaj;
+3. SELECT rodzaj, AVG(year(curdate()) - year(dataUr)) FROM kreatura GROUP BY rodzaj;
+
+ZAD 2
+1. SELECT SUM(waga), rodzaj FROM zasob GROUP BY rodzaj;
+2. SELECT nazwa, AVG(waga) FROM zasob WHERE ilosc >= 4 GROUP BY nazwa HAVING SUM(waga) > 10;
+3. SELECT rodzaj, nazwa, COUNT(*) AS ilosc FROM (SELECT rodzaj, nazwa FROM zasob GROUP BY rodzaj, nazwa HAVING COUNT(*) > 1) AS temp GROUP BY rodzaj, nazwa ORDER BY rodzaj, nazwa;
+
+ZAD 3
+1. SELECT kreatura.idKreatury, kreatura.nazwa, ekwipunek.ilosc FROM kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury;
+2. SELECT kreatura.nazwa, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu;
+3. SELECT kreatura.nazwa, ekwipunek.idEkwipunku from kreatura LEFT JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury WHERE idEkwipunku is NULL;
+
+ZAD 4
+1. SELECT kreatura.nazwa, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu WHERE kreatura.rodzaj = 'wiking' AND YEAR(kreatura.dataUr) BETWEEN 1670 AND 1679;
+2. SELECT kreatura.nazwa FROM kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu WHERE zasob.rodzaj = 'jedzenie' ORDER BY kreatura.dataUr ASC LIMIT 5;
+
+3. SELECT CONCAT(A.nazwa,'-',B.nazwa) FROM kreatura A, kreatura B WHERE B.idKreatury = A.idKreatury +5;
+
+ZAD 5 
+1. SELECT a.rodzaj,a.nazwa,a.dataUr,b.nazwa,b.dataUr FROM (SELECT rodzaj,nazwa,dataUr FROM kreatura k WHERE dataUr=(SELECT min(dataUr) FROM kreatura WHERE rodzaj = k.rodzaj)) a JOIN
+(SELECT rodzaj,nazwa,dataUr from kreatura k WHERE dataUr=(SELECT max(dataUr) FROM kreatura WHERE rodzaj = k.rodzaj)) b ON a.rodzaj = b.rodzaj;
+2. SELECT kreatura.rodzaj,AVG(zasob.waga) FROM (kreatura INNER JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idKreatury) INNER JOIN zasob ON ekwipunek.idZasobu= zasob.idZasobu WHERE ekwipunek.ilosc < 30 AND (kreatura.rodzaj != 'malpa' OR kreatura.rodzaj != 'waz') GROUP BY kreatura.rodzaj;
